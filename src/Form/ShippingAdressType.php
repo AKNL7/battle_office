@@ -2,38 +2,35 @@
 
 namespace App\Form;
 
-use App\Entity\BillingAdress;
-use App\Entity\Client;
+use App\Entity\Order;
 use App\Entity\ShippingAdress;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ClientType extends AbstractType
+class ShippingAdressType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('firstName')
-            ->add('lastName')
-            ->add('email')
+            ->add('adress_name')
+            ->add('city')
+            ->add('zip_code')
+            ->add('country')
             ->add('phone')
-            ->add('billing', BillingAdressType::class)
-         
-             // quelque chose);
-     
-            // ->add('adress_name'
-            // , ShippingAdressType::class) // quelque chose);
+            ->add('adress_option')
+            ->add('order_adress', EntityType::class, [
+                'class' => Order::class,
+                'choice_label' => 'id',
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Client::class,
-            // 'data_class' => BillingAdress::class, 
-         
+            'data_class' => ShippingAdress::class,
         ]);
     }
 }
